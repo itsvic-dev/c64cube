@@ -21,14 +21,14 @@ void Renderer::clear() {
     memset((void *)BITMAP_RAM, 0, 0x2000);
 }
 
-void Renderer::setPixel(const Point &p, bool clr) {
+void Renderer::setPixel(const Point *p, bool clr) {
+    if (p->x >= 320 || p->y >= 200 || p->x < 0 || p->y < 0) return;
     // get the 8x8 pixel block
-    unsigned int blockX = p.x >> 3;
-    unsigned int blockY = p.y >> 3;
-    volatile unsigned char *block = &BITMAP_RAM[(blockY * 40 + blockX) * 8];
+    unsigned int blockIndex = (p->y >> 3) * 40 + (p->x >> 3);
+    volatile unsigned char *block = &BITMAP_RAM[blockIndex * 8];
     // now get the position inside the block
-    unsigned int bPosX = p.x % 8;
-    unsigned int bPosY = p.y % 8;
+    uint8_t bPosX = p->x % 8;
+    uint8_t bPosY = p->y % 8;
     // now set or clear the bit
     if (clr) {
         block[bPosY] |= 1 << (7 - bPosX);
@@ -38,21 +38,22 @@ void Renderer::setPixel(const Point &p, bool clr) {
 }
 
 // thx chatgpt
-void Renderer::drawLine(const Point &p0, const Point &p1, bool clr) {
-    int16_t x0 = p0.x;
-    int16_t y0 = p0.y;
-    int16_t x1 = p1.x;
-    int16_t y1 = p1.y;
+void Renderer::drawLine(const Point *p0, const Point *p1, bool clr) {
+    int16_t x0 = p0->x;
+    int16_t y0 = p0->y;
+    int16_t x1 = p1->x;
+    int16_t y1 = p1->y;
 
-    int dx = abs(x1 - x0);
-    int dy = abs(y1 - y0);
-    int sx = x0 < x1 ? 1 : -1;
-    int sy = y0 < y1 ? 1 : -1;
-    int err = dx - dy;
+    int8_t dx = abs(x1 - x0);
+    int8_t dy = abs(y1 - y0);
+    int8_t sx = x0 < x1 ? 1 : -1;
+    int8_t sy = y0 < y1 ? 1 : -1;
+    int8_t err = dx - dy;
 
     while (x0 != x1 || y0 != y1) {
-        setPixel(Point(x0, y0), clr);
-        int err2 = 2 * err;
+        Point p(x0, y0);
+        setPixel(&p, clr);
+        int16_t err2 = 2 * err;
         
         if (err2 > -dy) {
             err -= dy;

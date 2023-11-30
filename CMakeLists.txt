@@ -10,6 +10,12 @@ find_package(llvm-mos-sdk REQUIRED)
 project(c64fun)
 add_executable(c64fun
   main.cpp render.cpp
-  point.cpp
+  point.cpp fixed.cpp
 )
-target_compile_options(c64fun PUBLIC -Os)
+
+add_executable(c64test
+  test.cpp
+  point.cpp fixed.cpp
+)
+target_compile_options(c64fun PUBLIC -Os -Wall -Werror)
+target_compile_options(c64test PUBLIC -Os -Wall -Werror)

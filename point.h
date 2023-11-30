@@ -1,14 +1,20 @@
 #pragma once
 #include <stdint.h>
+#include "fixed.h"
+
+typedef Fixed Matrix3x3[3][3];
 
 class Point {
 public:
-    Point(uint16_t x, uint16_t y);
-    Point(uint16_t x, uint16_t y, uint16_t z);
+    Point(int16_t x, int16_t y);
+    Point(int16_t x, int16_t y, int16_t z);
+    Point(Fixed x, Fixed y, Fixed z);
 
-    uint16_t x;
-    uint16_t y;
-    uint16_t z;
+    Fixed x;
+    Fixed y;
+    Fixed z;
 
     Point operator+(const Point &p1) const;
+
+    void applyRotMatrix(const Matrix3x3 *mat);
 };
