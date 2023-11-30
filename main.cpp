@@ -1,19 +1,19 @@
 #include <c64.h>
-#include <stdio.h>
+#include <stdint.h>
 #include "render.h"
 
 Renderer renderer;
+int frameCount = 0;
+
+void drawLoop() {
+    renderer.clear();
+    renderer.drawLine(Point(0, 0), Point(100, 50), 1);
+}
 
 int main() {
     renderer.init();
-
-    renderer.drawLine(0, 0, 319, 199, 1);
-
-    // LLVM optimizes this loop away since
-    // it does nothing, so i snuck a NOP
-    // in here so we don't end up returning
-    // to BASIC
     while (true) {
-        asm("nop");
+        drawLoop();
+        frameCount++;
     }
 }

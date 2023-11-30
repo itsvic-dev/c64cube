@@ -8,5 +8,8 @@ set(LLVM_MOS_PLATFORM c64)
 find_package(llvm-mos-sdk REQUIRED)
 
 project(c64fun)
-add_executable(c64fun main.cpp render.cpp)
+add_executable(c64fun
+  main.cpp render.cpp
+  point.cpp
+)
 target_compile_options(c64fun PUBLIC -Os)
