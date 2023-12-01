@@ -7,6 +7,7 @@ endif()
 set(LLVM_MOS_PLATFORM c64)
 find_package(llvm-mos-sdk REQUIRED)
 project(c64fun)
+set(CMAKE_EXECUTABLE_SUFFIX .prg)
 
 add_library(
   cubecore STATIC
