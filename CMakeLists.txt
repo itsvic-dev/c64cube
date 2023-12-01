@@ -11,11 +11,13 @@ project(c64fun)
 add_executable(c64fun
   main.cpp render.cpp
   point.cpp fixed.cpp
+  fixedmath.cpp
 )
 
 add_executable(c64test
   test.cpp
   point.cpp fixed.cpp
+  fixedmath.cpp
 )
 target_compile_options(c64fun PUBLIC -Os -Wall -Werror)
 target_compile_options(c64test PUBLIC -Os -Wall -Werror)

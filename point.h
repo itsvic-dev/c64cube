@@ -16,5 +16,5 @@ public:
 
     Point operator+(const Point &p1) const;
 
-    void applyRotMatrix(const Matrix3x3 *mat);
+    void applyRotMatrix(const Matrix3x3 &mat);
 };

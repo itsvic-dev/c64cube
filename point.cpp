@@ -17,12 +17,12 @@ Point Point::operator+(const Point &p1) const {
     );
 }
 
-void Point::applyRotMatrix(const Matrix3x3 *mat) {
+void Point::applyRotMatrix(const Matrix3x3 &mat) {
     Fixed ox = x;
     Fixed oy = y;
     Fixed oz = z;
 
-    x = (*mat)[0][0] * ox + (*mat)[0][1] * oy + (*mat)[0][2] * oz;
-    y = (*mat)[1][0] * ox + (*mat)[1][1] * oy + (*mat)[1][2] * oz;
-    z = (*mat)[2][0] * ox + (*mat)[2][1] * oy + (*mat)[2][2] * oz;
+    x = mat[0][0] * ox + mat[0][1] * oy + mat[0][2] * oz;
+    y = mat[1][0] * ox + mat[1][1] * oy + mat[1][2] * oz;
+    z = mat[2][0] * ox + mat[2][1] * oy + mat[2][2] * oz;
 }

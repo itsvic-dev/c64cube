@@ -71,3 +71,9 @@ Fixed Fixed::operator*(const Fixed &other) const {
     newFixed._v = FP_DOWN(_v * other._v);
     return newFixed;
 }
+
+Fixed Fixed::operator/(const Fixed &other) const {
+    auto newFixed = Fixed();
+    newFixed._v = _v % other._v;
+    return newFixed;
+}

@@ -25,8 +25,7 @@ const Point centerOffset = Point(320 / 2, 200 / 2);
 void drawLoop() {
     renderer.clear();
 
-    Fixed angle = rad(frameCount * 2 % 90);
-
+    Fixed angle = Fixed(frameCount) / 10;
     Matrix3x3 rotZ = {
         {fxcos(angle), -fxsin(angle), 0},
         {fxsin(angle),  fxcos(angle), 0},
@@ -39,9 +38,9 @@ void drawLoop() {
         points[2], points[3],
     };
 
-    for (int i = 0; i < 4; i++) {
-        Point *p = &transformedPoints[edges[i]];
-        p->applyRotMatrix(&rotZ);
+    for (int i = 0; i < sizeof(points) / sizeof(Point); i++) {
+        Point *p = &transformedPoints[i];
+        p->applyRotMatrix(rotZ);
     }
 
     for (int i = 0; i < sizeof(edges) / sizeof(int); i += 2) {
@@ -49,6 +48,8 @@ void drawLoop() {
         Point p1 = transformedPoints[edges[i + 1]] + centerOffset;
         renderer.drawLine(&p0, &p1, true);
     }
+
+    renderer.flush();
 
     // artificial delay
     // for (int i = 0; i < 0x1000; i++) {
