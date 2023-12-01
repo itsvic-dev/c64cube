@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include "render.h"
 #include "fixedmath.h"
+#include <string.h>
 
 Renderer renderer;
 int frameCount = 0;
@@ -52,12 +53,8 @@ void drawLoop() {
     };
 
     // transform all points
-    Point transformedPoints[sizeof(points) / sizeof(Point)] = {
-        points[0], points[1],
-        points[2], points[3],
-        points[4], points[5],
-        points[6], points[7],
-    };
+    Point transformedPoints[sizeof(points) / sizeof(Point)];
+    memcpy((void *)transformedPoints, points, sizeof(points));
 
     for (int i = 0; i < sizeof(points) / sizeof(Point); i++) {
         Point *p = &transformedPoints[i];

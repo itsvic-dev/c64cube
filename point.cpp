@@ -1,5 +1,8 @@
 #include "point.h"
 
+Point::Point()
+    : x(0), y(0), z(0) {}
+
 Point::Point(int16_t x, int16_t y)
     : x(x), y(y), z(0) {}
 

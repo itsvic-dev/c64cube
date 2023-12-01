@@ -6,6 +6,7 @@ typedef Fixed Matrix3x3[3][3];
 
 class Point {
 public:
+    Point();
     Point(int16_t x, int16_t y);
     Point(int16_t x, int16_t y, int16_t z);
     Point(Fixed x, Fixed y, Fixed z);
