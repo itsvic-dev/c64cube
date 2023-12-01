@@ -3,11 +3,12 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define SCREEN_RAM ((volatile unsigned char *)0x400)
-#define BITMAP_RAM ((volatile unsigned char *)0x2000)
+#define SCREEN_RAM ((volatile unsigned char *)0x4400)
+#define BITMAP_RAM ((volatile unsigned char *)0x6000)
 
 void Renderer::init() {
     // set up the VIC-II
+    CIA2.pra = 2; // move VIC's base to 0x4000
     VIC.bordercolor = 16;
     VIC.ctrl1 |= (1 << 5); // set BMM byte of CR1 to enable bitmap mode
     VIC.addr = 0x18; // put screen RAM at 0x400, bitmap RAM at 0x2000
