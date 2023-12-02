@@ -41,7 +41,46 @@ void Renderer::setPixel(const Point *p, bool clr) {
     }
 }
 
+// http://www.edepot.com/lined.html
+void Renderer::drawLine(const Point *p0, const Point *p1, bool clr) {
+    int16_t x = p0->x;
+    int16_t y = p0->y;
+    int16_t x2 = p1->x;
+    int16_t y2 = p1->y;
+    bool yLonger = false;
+    int16_t incVal = 1;
+    int16_t endVal = 0;
+    int16_t shortLen = y2 - y;
+    int16_t longLen = x2 - x;
+    if (abs(shortLen) > abs(longLen)) {
+        int16_t swap = shortLen;
+        shortLen = longLen;
+        longLen = swap;
+        yLonger = true;
+    }
+
+    endVal = longLen;
+
+    if (longLen < 0) {
+        incVal = -1;
+        longLen = -longLen;
+    }
+    int16_t decInc = 0;
+    if (longLen) { decInc = (shortLen << 8) / longLen; }
+    int16_t j = 0;
+    Point p;
+
+    for (int16_t i = 0; i != endVal; i += incVal) {
+        p = Point(x + i, y + (j >> 8));
+        if (yLonger) { p = Point(x + (j >> 8), y + i); }
+        setPixel(&p, clr);
+        j += decInc;
+    }
+}
+
 // thx chatgpt
+// Fuck ChatGPT
+#if 0
 void Renderer::drawLine(const Point *p0, const Point *p1, bool clr) {
     int16_t x0 = p0->x;
     int16_t y0 = p0->y;
@@ -70,3 +109,4 @@ void Renderer::drawLine(const Point *p0, const Point *p1, bool clr) {
         }
     }
 }
+#endif
