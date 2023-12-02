@@ -77,36 +77,3 @@ void Renderer::drawLine(const Point *p0, const Point *p1, bool clr) {
         j += decInc;
     }
 }
-
-// thx chatgpt
-// Fuck ChatGPT
-#if 0
-void Renderer::drawLine(const Point *p0, const Point *p1, bool clr) {
-    int16_t x0 = p0->x;
-    int16_t y0 = p0->y;
-    int16_t x1 = p1->x;
-    int16_t y1 = p1->y;
-
-    int16_t dx = abs(x1 - x0);
-    int16_t dy = abs(y1 - y0);
-    int16_t sx = x0 < x1 ? 1 : -1;
-    int16_t sy = y0 < y1 ? 1 : -1;
-    int16_t err = dx - dy;
-
-    while (x0 != x1 || y0 != y1) {
-        Point p(x0, y0);
-        setPixel(&p, clr);
-        int16_t err2 = 2 * err;
-        
-        if (err2 > -dy) {
-            err -= dy;
-            x0 += sx;
-        }
-        
-        if (err2 < dx) {
-            err += dx;
-            y0 += sy;
-        }
-    }
-}
-#endif
